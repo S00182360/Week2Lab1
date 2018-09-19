@@ -116,9 +116,47 @@ namespace Week2Lab1
                             Keyboard.GetState().IsKeyDown(Keys.T))
                 alphaComponent++;
 
+
             
-            
+
+
             GamePadState gpState = GamePad.GetState(PlayerIndex.One);
+
+            if(Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                if(dotRect.Y - (5) < graphics.GraphicsDevice.Viewport.Height - dotRect.Height && dotRect.Y - 5 > 0)
+                {
+                    dotRect.Y -= 5;
+                }
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                if (dotRect.Y - (-1 * 5) < graphics.GraphicsDevice.Viewport.Height - dotRect.Height && dotRect.Y - (-1 * 5) > 0)
+                {
+                    dotRect.Y += 5;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                if (dotRect.X + (5) < graphics.GraphicsDevice.Viewport.Width - dotRect.Width && dotRect.X + 5 > 0)
+                {
+                    dotRect.X += 5;
+                }
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                if (dotRect.X + (-1 * 5) < graphics.GraphicsDevice.Viewport.Width - dotRect.Width && dotRect.X + (-1 * 5) > 0)
+                {
+                    dotRect.X -= 5;
+                }
+            }
+
+
+
+
+
+
             if (gpState.IsConnected)
             {
                 if (gpState.ThumbSticks.Left.X != 0 ||
@@ -139,6 +177,11 @@ namespace Week2Lab1
                                 dotRect.Y -= (int)(gpState.ThumbSticks.Left.Y * 5);
                 }
             }
+
+
+            
+
+
             // TODO: Add your update logic here
             dotColor = new Color(redComponent, greenComponent, blueComponent, alphaComponent);
             message = "Red: " + redComponent.ToString() +
