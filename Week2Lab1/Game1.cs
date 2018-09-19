@@ -20,8 +20,9 @@ namespace Week2Lab1
         SpriteBatch spriteBatch;
         // Variables for the Dot
         Texture2D dot;
-        Color dotColor;
-        Rectangle dotRect;
+        Texture2D dotTwo;
+        Color dotColor, dotTwoColor;
+        Rectangle dotRect, dotTwoRect;
         int dotSize;
         // Variables for the Background 
         Texture2D background;
@@ -32,10 +33,15 @@ namespace Week2Lab1
         int displayHeight;
 
         // Variables to hold the color change
-        byte redComponent = 0;
+        byte redComponent = 255;
         byte blueComponent = 0;
         byte greenComponent = 0;
-        byte alphaComponent = 0;
+        byte alphaComponent = 255;
+        //Variables for second Dot
+        byte redComponentTwo = 0;
+        byte blueComponentTwo = 255;
+        byte greenComponentTwo = 0;
+        byte alphaComponentTwo = 255;
 
         // Vars to draw message
         SpriteFont font;
@@ -73,10 +79,14 @@ namespace Week2Lab1
 
             // TODO: use this.Content to load your game content here
             dot = Content.Load<Texture2D>("WhiteDot");
+            dotTwo = Content.Load < Texture2D>("WhiteDot");
             dotColor = Color.White;
+            dotTwoColor = Color.White;
+
             dotSize = 40;
 
-            dotRect = new Rectangle(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2, dotSize, dotSize);
+            dotRect = new Rectangle(graphics.GraphicsDevice.Viewport.Width * 3 / 4, graphics.GraphicsDevice.Viewport.Height * 3 / 4, dotSize, dotSize);
+            dotTwoRect = new Rectangle(graphics.GraphicsDevice.Viewport.Width / 4, graphics.GraphicsDevice.Viewport.Height / 4, dotSize, dotSize);
 
             background = Content.Load<Texture2D>("background");
             backgroundRect = new Rectangle(0, 0, displayWidth, displayHeight);
@@ -136,7 +146,6 @@ namespace Week2Lab1
                     dotRect.Y += 5;
                 }
             }
-
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 if (dotRect.X + (5) < graphics.GraphicsDevice.Viewport.Width - dotRect.Width && dotRect.X + 5 > 0)
@@ -152,7 +161,35 @@ namespace Week2Lab1
                 }
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                if (dotTwoRect.Y - (5) < graphics.GraphicsDevice.Viewport.Height - dotTwoRect.Height && dotTwoRect.Y - 5 > 0)
+                {
+                    dotTwoRect.Y -= 5;
+                }
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                if (dotTwoRect.Y - (-1 * 5) < graphics.GraphicsDevice.Viewport.Height - dotTwoRect.Height && dotTwoRect.Y - (-1 * 5) > 0)
+                {
+                    dotTwoRect.Y += 5;
+                }
+            }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                if (dotTwoRect.X + (5) < graphics.GraphicsDevice.Viewport.Width - dotTwoRect.Width && dotTwoRect.X + 5 > 0)
+                {
+                    dotTwoRect.X += 5;
+                }
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                if (dotTwoRect.X + (-1 * 5) < graphics.GraphicsDevice.Viewport.Width - dotTwoRect.Width && dotTwoRect.X + (-1 * 5) > 0)
+                {
+                    dotTwoRect.X -= 5;
+                }
+            }
 
 
 
@@ -188,6 +225,8 @@ namespace Week2Lab1
                             " Green: " + greenComponent.ToString() +
                             " Blue: " + blueComponent.ToString() +
                             " Alpha: " + alphaComponent.ToString();
+            dotTwoColor = new Color(redComponentTwo, greenComponentTwo, blueComponentTwo, alphaComponentTwo);
+
 
             base.Update(gameTime);
         }
@@ -206,6 +245,8 @@ namespace Week2Lab1
             spriteBatch.Draw(background, backgroundRect, Color.White);
 
             spriteBatch.Draw(dot, dotRect, dotColor);
+
+            spriteBatch.Draw(dotTwo, dotTwoRect, dotTwoColor);
 
             // Work out Centre the text to draw
             int stringWidth = (int)font.MeasureString(message).X;
